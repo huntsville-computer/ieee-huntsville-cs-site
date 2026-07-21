@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """
 Shared logic for pulling this chapter's event list from vTools, live or
-from a CSV export. Used by both vtools_events_to_html.py (Past Events
-page HTML) and vtools_events_to_tec_csv.py (The Events Calendar plugin
-CSV import).
+from a CSV export. Used by vtools_events_to_html.py to build the Past
+Events page HTML.
 
 This chapter's OU is CH03037 ("Huntsville Section Chapter, C16"). Two
 live vTools endpoints, no login required:

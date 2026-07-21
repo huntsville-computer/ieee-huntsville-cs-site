@@ -2,12 +2,12 @@
 
 These events are from the chapter's old website
 (`ewh.ieee.org/r3/huntsville/cs/`, retired during the 2026 migration to
-`r3.ieee.org/huntsville-computer`). They predate IEEE vTools, so they
-aren't in vTools and can't be pulled by
-[`scripts/vtools_events_to_html.py`](../scripts/vtools_events_to_html.py)
-— this is the only record of them. They're already published on the live
-Past Events page; this file exists so they aren't lost if that page ever
-needs to be rebuilt.
+`r3.ieee.org/huntsville-computer`). They predate IEEE vTools, so there's
+no vTools record of them — this file is the only record. Edit it (in
+this same `**Title**` / `- Date: ...` / `- Speaker: ...` format) if you
+ever turn up more pre-2014 events; [`scripts/vtools_events_to_html.py`](../scripts/vtools_events_to_html.py)
+reads this file directly and merges it with the live vTools events, so
+anything added here shows up in that script's output automatically.
 
 ---
 
