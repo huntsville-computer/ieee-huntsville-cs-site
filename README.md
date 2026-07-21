@@ -23,8 +23,10 @@ rediscover any of this from scratch.
 | [`docs/learnings.md`](docs/learnings.md) | Practical notes on how the WordPress site is actually put together (WPBakery shortcodes, the Team Members plugin, the nav menu, WP Engine caching) — read this before making edits so you don't break something. |
 | [`docs/vtools-event-import.md`](docs/vtools-event-import.md) | How to pull new/past events out of vTools and get them onto the site's Past Events archive page. |
 | [`docs/old-site-past-events.md`](docs/old-site-past-events.md) | The chapter's pre-vTools (2006) past events, preserved from the old `ewh.ieee.org` site. |
-| [`scripts/vtools_events_to_html.py`](scripts/vtools_events_to_html.py) | Generates the Past Events page HTML (with per-event vTools links) from a vTools CSV export. |
-| [`generated/`](generated/) | Dated snapshots of the script's output, for reference. |
+| [`scripts/vtools_events.py`](scripts/vtools_events.py) | Shared code that fetches this chapter's event list live from vTools (or from a manually-exported CSV as a fallback). Used by both scripts below. |
+| [`scripts/vtools_events_to_html.py`](scripts/vtools_events_to_html.py) | Generates the Past Events page HTML, with a link to each event's own vTools page. |
+| [`scripts/vtools_events_to_tec_csv.py`](scripts/vtools_events_to_tec_csv.py) | Generates `events.csv`/`venues.csv` for importing into **The Events Calendar**, the plugin that actually powers the site's `/events/` page (see `docs/learnings.md`). |
+| [`generated/`](generated/) | Dated snapshots of the scripts' output, for reference. |
 
 ## Status (as of July 2026)
 

@@ -69,14 +69,22 @@ you make a change and it's not showing up for visitors, this is almost
 certainly why — check with a logged-out/incognito view (or wait; it does
 eventually clear on its own).
 
-## The Events section only shows *upcoming* events
+## The Events section only shows *upcoming* events (by default)
 
 Both the homepage sidebar events widget and the `/events/` page (from
-The Events Calendar plugin) only display future-dated events. If there
-are none, they show nothing (or "There are no upcoming events") — this is
-normal, not a bug. Past/historical events don't belong in that plugin for
-this chapter's purposes; see `vtools-event-import.md` for how we handle
-history instead.
+The Events Calendar plugin) only display future-dated events by default.
+If there are none, they show nothing (or "There are no upcoming events")
+— this is normal, not a bug.
+
+There is a way to get past events *into* this same plugin now —
+`scripts/vtools_events_to_tec_csv.py` generates a CSV importable via
+Events → Import → CSV (see `vtools-event-import.md`) — but we haven't
+verified whether/how past events display on the front end once imported
+(The Events Calendar Pro may have a "past events" list view that isn't
+linked from the default nav; untested as of this writing). Until that's
+confirmed, the plain-HTML Past Events page (built by
+`vtools_events_to_html.py`) remains the reliable way to show chapter
+history publicly.
 
 ## Plugin landscape
 

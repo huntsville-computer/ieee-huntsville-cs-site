@@ -17,6 +17,11 @@ to auto-*publish* it (WordPress editing is manual), so this doc still
 describes the manual publishing step, and the CSV-export path remains
 as a fallback (e.g. if vtools.ieee.org is unreachable).
 
+There's a second script, `scripts/vtools_events_to_tec_csv.py`, for
+importing the same event data into **The Events Calendar** — the plugin
+that actually runs the site's `/events/` page (see `learnings.md`). See
+"Importing into The Events Calendar" below.
+
 ## Where the historical data comes from
 
 Two sources:
@@ -88,7 +93,9 @@ python3 scripts/vtools_events_to_html.py path/to/export.csv > past_events.html
 
 ### How it fetches live data
 
-No login or API key needed. Two requests do all the work:
+The live-fetch logic lives in `scripts/vtools_events.py`, shared by both
+scripts on this page. No login or API key needed — two requests do all
+the work:
 
 1. This chapter's own search results, as CSV, gives the full list of
    event IDs (this is the same URL as the "All Events" link, with
@@ -141,3 +148,47 @@ Notes:
   passes (e.g. this surfaced 2010, 2013, 2015–2016, and a couple of
   2018–2019 events not previously on the page) — review the output for
   events not yet published before pasting.
+
+## Importing into The Events Calendar
+
+`scripts/vtools_events_to_tec_csv.py` generates two CSV files, in the
+format documented at
+https://docs.nexcess.com/software/the-events-calendar/import-events-csv/,
+for importing this chapter's vTools events as native Event Calendar
+entries (rather than a plain-text page):
+
+```
+python3 scripts/vtools_events_to_tec_csv.py --out-dir /tmp/tec_export
+```
+
+This writes `events.csv` and `venues.csv`. **Import venues.csv first**,
+then events.csv (WordPress admin: Events → Import → CSV, pick the
+matching import type for each file) — The Events Calendar links an
+event to a venue by matching "Event Venue Name" to an existing Venue
+post's exact name, so the venue has to exist first.
+
+Notes:
+
+- **Venue Name is built from the event's address** (street address +
+  city), since vTools gives us an address, not a human venue name like
+  "GigaParts, Inc." Events sharing an address correctly share one venue
+  — but the source data has some near-duplicate addresses (typos like
+  "Permeter" vs "Parkway", inconsistent suite numbers, a trailing ", AL"
+  on some entries) that will still produce separate, near-identical
+  Venue posts. Worth a manual cleanup pass in WordPress after import if
+  that bothers you; not something the script tries to fuzzy-match.
+- **Event Category** is hardcoded to a single fixed value
+  (`IEEE Computer Society`) for every event, since this whole feed is
+  already scoped to one chapter. Change the `EVENT_CATEGORY` constant at
+  the top of the script if you want something else.
+- **Venue Country** defaults to "United States" for anything not marked
+  virtual. vTools' API exposes country as a numeric id rather than a
+  name; every event in this chapter's history has in fact been
+  US-based, so hardcoding was simpler than resolving that id.
+- **We don't know yet whether past events actually display** once
+  imported into this plugin — see the note in `learnings.md`. Untested
+  as of this writing.
+- `--out-dir` defaults to the current directory; it also accepts a
+  manually-exported CSV path as a positional argument (same fallback as
+  `vtools_events_to_html.py`), though that path won't have event
+  descriptions (not present in that export format).
