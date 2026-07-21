@@ -17,10 +17,21 @@ to auto-*publish* it (WordPress editing is manual), so this doc still
 describes the manual publishing step, and the CSV-export path remains
 as a fallback (e.g. if vtools.ieee.org is unreachable).
 
-There's a second script, `scripts/vtools_events_to_tec_csv.py`, for
-importing the same event data into **The Events Calendar** — the plugin
-that actually runs the site's `/events/` page (see `learnings.md`). See
-"Importing into The Events Calendar" below.
+There are two more scripts for importing the same event data into
+**The Events Calendar** — the plugin that actually runs the site's
+`/events/` page (see `learnings.md`):
+
+- `scripts/vtools_events_to_tec_csv.py` generates a CSV for Events →
+  Import → CSV. **This site's WordPress rejects that upload** ("Sorry,
+  you are not allowed to upload this file type") — a known WordPress/WP
+  Engine/security-plugin issue unrelated to the file's content (see
+  "Importing into The Events Calendar" below for what we tried). Kept
+  around in case that gets fixed or you're pointing this at a
+  different, unaffected site.
+- `scripts/vtools_events_to_tec_api.py` — **the one that actually
+  works here** — creates the same events/venues directly via the
+  plugin's REST API instead of uploading a file at all, sidestepping
+  the upload block entirely. See "Importing via the REST API" below.
 
 ## Where the historical data comes from
 
@@ -167,6 +178,18 @@ matching import type for each file) — The Events Calendar links an
 event to a venue by matching "Event Venue Name" to an existing Venue
 post's exact name, so the venue has to exist first.
 
+**As of July 2026, uploading either CSV to this site fails** with
+"Sorry, you are not allowed to upload this file type" — this is a known
+WordPress/hosting-level issue (a MIME-type sniffing mismatch, a security
+plugin, or a WP Engine upload restriction — not something wrong with the
+generated file itself) and not specific to The Events Calendar. Things
+worth trying if you hit this again: re-saving the CSV through a
+spreadsheet app before uploading, testing with a tiny dummy CSV to see
+if *all* CSV uploads are blocked, checking for a security plugin's
+upload-restriction setting, or asking WP Engine support directly. None
+of that resolved it for us, which is why `vtools_events_to_tec_api.py`
+(below) exists — it doesn't upload a file at all.
+
 Notes:
 
 - **Venue Name is built from the event's address** (street address +
@@ -192,3 +215,66 @@ Notes:
   manually-exported CSV path as a positional argument (same fallback as
   `vtools_events_to_html.py`), though that path won't have event
   descriptions (not present in that export format).
+
+## Importing via the REST API
+
+Since CSV upload is blocked on this site (see above),
+`scripts/vtools_events_to_tec_api.py` creates the same events and venues
+by talking to The Events Calendar's own REST API directly — no file
+upload involved, so the block doesn't apply. Confirmed the API is live
+and reachable at `https://r3.ieee.org/huntsville-computer/wp-json/tribe/events/v1/`
+(no login needed just to browse the route list — try it in a browser).
+
+You'll need a WordPress **Application Password** (WordPress admin →
+Users → your profile → Application Passwords → give it a name like
+"vtools-import" → Add). This is a WordPress-native feature (5.6+)
+designed exactly for this — a per-user, revocable credential for API
+access that isn't your login password. Then:
+
+```
+export TEC_WP_USERNAME="your-wp-username"
+export TEC_WP_APP_PASSWORD="xxxx xxxx xxxx xxxx xxxx xxxx"
+python3 scripts/vtools_events_to_tec_api.py
+```
+
+**Never commit these credentials to this repo** — they're read from
+environment variables, not arguments, so they don't end up in shell
+history files as easily either.
+
+By default this creates everything as **drafts** — nothing goes live on
+the public site until you review and publish from wp-admin yourself.
+Once you're happy, re-run with `--publish` to create things published
+directly (or just publish the drafts by hand in wp-admin).
+
+Notes:
+
+- **Confirmed working against the live site's schema** — the exact
+  field names/types below came from querying
+  `/wp-json/tribe/events/v1/` and `/wp-json/tribe/events/v1/doc`
+  directly (both public, no auth needed), not guessed from generic
+  plugin docs.
+- **A 403 with "error code: 1010" means Cloudflare/WP Engine blocked
+  the request as a bot**, not an auth failure — this happened during
+  testing because Python's default `urllib` User-Agent gets flagged.
+  The script sends a browser-like User-Agent to avoid this; if you see
+  this error anyway, something about the request changed.
+- **A 401 `rest_forbidden` means bad credentials** — check the
+  Application Password was copied correctly (WordPress shows it once,
+  with spaces, when you create it — include the spaces).
+- **Re-running has one confirmed gap**: it checks for existing venues/
+  events first so it won't duplicate already-*published* items, but
+  this site's `GET /venues` and `GET /events` only accept
+  `status=publish` — even `status=draft` alone gets rejected with a 400
+  (confirmed by testing, not just an auth artifact). There's no way to
+  query for existing drafts through this API. So: don't run this twice
+  while a previous run's drafts are still sitting unpublished, or
+  you'll get duplicates. Publish (or delete) them first.
+- **Category** is hardcoded to `IEEE Computer Society` for every event,
+  same as the CSV script — change `EVENT_CATEGORY` at the top of the
+  script if you want something else.
+- **Venue matching, address quirks, and the "United States" default**
+  work the same way as `vtools_events_to_tec_csv.py` above — same
+  near-duplicate-address caveat applies.
+- **We still don't know whether past events display on the front end**
+  once created this way — see the note in `learnings.md`. If you find
+  out, update that note.

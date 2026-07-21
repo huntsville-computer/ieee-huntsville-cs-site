@@ -25,7 +25,8 @@ rediscover any of this from scratch.
 | [`docs/old-site-past-events.md`](docs/old-site-past-events.md) | The chapter's pre-vTools (2006) past events, preserved from the old `ewh.ieee.org` site. |
 | [`scripts/vtools_events.py`](scripts/vtools_events.py) | Shared code that fetches this chapter's event list live from vTools (or from a manually-exported CSV as a fallback). Used by both scripts below. |
 | [`scripts/vtools_events_to_html.py`](scripts/vtools_events_to_html.py) | Generates the Past Events page HTML, with a link to each event's own vTools page. |
-| [`scripts/vtools_events_to_tec_csv.py`](scripts/vtools_events_to_tec_csv.py) | Generates `events.csv`/`venues.csv` for importing into **The Events Calendar**, the plugin that actually powers the site's `/events/` page (see `docs/learnings.md`). |
+| [`scripts/vtools_events_to_tec_csv.py`](scripts/vtools_events_to_tec_csv.py) | Generates `events.csv`/`venues.csv` for importing into **The Events Calendar**, the plugin that actually powers the site's `/events/` page (see `docs/learnings.md`). **CSV upload is currently blocked on this site** — see `docs/vtools-event-import.md`. |
+| [`scripts/vtools_events_to_tec_api.py`](scripts/vtools_events_to_tec_api.py) | Same result as the CSV script, but via The Events Calendar's REST API instead of a file upload — this is the one that actually works here. |
 | [`generated/`](generated/) | Dated snapshots of the scripts' output, for reference. |
 
 ## Status (as of July 2026)
