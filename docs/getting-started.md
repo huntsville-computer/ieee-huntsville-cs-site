@@ -16,8 +16,8 @@ for and how to get in.
 To get an admin account, ask the outgoing Chapter Chair or Webmaster to
 add you as a WordPress user (Users → Add New in the wp-admin sidebar), or
 if you're the first officer standing up the site, contact IEEE web
-hosting support (see `migration-guide.md` for the "Helpful WordPress
-Resources" links) to get provisioned.
+hosting support (see the "Helpful WordPress Resources" below) to get
+provisioned.
 
 **Before editing anything**, read [`learnings.md`](learnings.md) — the
 site uses WPBakery Page Builder shortcodes on some pages (notably the
@@ -67,3 +67,12 @@ login, likely through IEEE's web hosting team.
    at the CH03037 search link.
 4. Get added to the GitHub org so you can update this repo as you learn
    things (please do — future-you and future-officers will thank you).
+
+## Helpful WordPress Resources (from IEEE)
+
+- [WordPress Help Documentation](https://brand-experience.ieee.org/download/ieee-website-templates-customization-documentation/?wpdmdlD52)
+- [IEEE Template Tutorial](https://go.ieee.org/ieee-template-tutorial)
+- [WordPress Beginner Training](https://learn.wordpress.org/course/beginner-wordpress-user/)
+- [IEEE Website Templates](https://brand-experience.ieee.org/templates-tools-resources/templates/website-templates/)
+- [IEEE Shared Web Hosting Instructions](https://kb.ieee.org/ewh/kb/ieee-shared-web-hosting-instructions/)
+- [IEEE Web Hosting Policy](https://site.ieee.org/web-hosting-policy/)

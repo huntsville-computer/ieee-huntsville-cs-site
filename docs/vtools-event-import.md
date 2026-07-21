@@ -23,8 +23,9 @@ Two sources:
 
 1. **The old chapter website** (pre-migration, `ewh.ieee.org`) — a
    handful of very old (2006-era) events that predate vTools. These are
-   already captured in `migration-guide.md` and on the Past Events page;
-   there's nothing left to pull for this source going forward.
+   already captured in [`old-site-past-events.md`](old-site-past-events.md)
+   and on the Past Events page; there's nothing left to pull for this
+   source going forward.
 2. **IEEE vTools** — the system of record for everything from ~2014
    onward. This chapter's vTools ID is **CH03037**.
 
@@ -133,8 +134,9 @@ Notes:
   preserves the original comma-separated phrasing (e.g. `IEEE, Huntsville
   Section`). Cosmetic only.
 - **2006-era events aren't in vTools** and won't appear in the script's
-  output — they stay as the hand-written entries already in
-  `migration-guide.md` / the top of the Past Events page.
+  output — they stay as the hand-written entries in
+  [`old-site-past-events.md`](old-site-past-events.md) / the top of the
+  Past Events page.
 - Running this may surface events that were missed in earlier manual
   passes (e.g. this surfaced 2010, 2013, 2015–2016, and a couple of
   2018–2019 events not previously on the page) — review the output for

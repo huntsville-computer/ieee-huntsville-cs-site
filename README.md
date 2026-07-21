@@ -19,10 +19,10 @@ rediscover any of this from scratch.
 
 | Path | What it is |
 |---|---|
-| [`migration-guide.md`](migration-guide.md) | The original 2026 WordPress migration guide (old ewh.ieee.org site → r3.ieee.org). Kept as a historical record of what the site looked like pre-migration and what got fixed. |
 | [`docs/getting-started.md`](docs/getting-started.md) | Onboarding doc for a new Chapter Chair / officer / volunteer: how to get access to the website, vTools, and this repo. |
 | [`docs/learnings.md`](docs/learnings.md) | Practical notes on how the WordPress site is actually put together (WPBakery shortcodes, the Team Members plugin, the nav menu, WP Engine caching) — read this before making edits so you don't break something. |
 | [`docs/vtools-event-import.md`](docs/vtools-event-import.md) | How to pull new/past events out of vTools and get them onto the site's Past Events archive page. |
+| [`docs/old-site-past-events.md`](docs/old-site-past-events.md) | The chapter's pre-vTools (2006) past events, preserved from the old `ewh.ieee.org` site. |
 | [`scripts/vtools_events_to_html.py`](scripts/vtools_events_to_html.py) | Generates the Past Events page HTML (with per-event vTools links) from a vTools CSV export. |
 | [`generated/`](generated/) | Dated snapshots of the script's output, for reference. |
 
@@ -32,8 +32,8 @@ The site migration from the old `ewh.ieee.org/r3/huntsville/cs/` site is
 functionally complete: placeholder pages/content removed, real officer
 info published, a Past Events archive built from historical records, and
 navigation cleaned up. The old site is still live and will redirect once
-the chapter notifies IEEE's webmaster (see `migration-guide.md` for the
-ticket reference).
+the chapter notifies IEEE's webmaster, Ray Umali, at
+**ewh-webmaster@ieee.org** (reference ticket **#260415-000712**).
 
 Still open: adding real upcoming meeting info to the homepage once one is
 scheduled, and keeping the Past Events archive current going forward (see
