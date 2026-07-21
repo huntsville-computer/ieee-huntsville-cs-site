@@ -23,6 +23,8 @@ rediscover any of this from scratch.
 | [`docs/getting-started.md`](docs/getting-started.md) | Onboarding doc for a new Chapter Chair / officer / volunteer: how to get access to the website, vTools, and this repo. |
 | [`docs/learnings.md`](docs/learnings.md) | Practical notes on how the WordPress site is actually put together (WPBakery shortcodes, the Team Members plugin, the nav menu, WP Engine caching) — read this before making edits so you don't break something. |
 | [`docs/vtools-event-import.md`](docs/vtools-event-import.md) | How to pull new/past events out of vTools and get them onto the site's Past Events archive page. |
+| [`scripts/vtools_events_to_html.py`](scripts/vtools_events_to_html.py) | Generates the Past Events page HTML (with per-event vTools links) from a vTools CSV export. |
+| [`generated/`](generated/) | Dated snapshots of the script's output, for reference. |
 
 ## Status (as of July 2026)
 
